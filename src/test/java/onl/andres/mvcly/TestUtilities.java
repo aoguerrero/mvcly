@@ -1,0 +1,15 @@
+package onl.andres.mvcly;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import onl.andres.mvcly.cntr.BaseController;
+
+public class TestUtilities {
+
+	public static ControllerHandler getControllerHandler(String path, BaseController baseController) {
+		Map<String, BaseController> controllers = new HashMap<>();
+		controllers.put(path, baseController);
+		return new ControllerHandler(controllers);
+	}
+}
