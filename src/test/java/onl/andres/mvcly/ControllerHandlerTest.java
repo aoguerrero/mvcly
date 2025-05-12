@@ -28,6 +28,6 @@ public class ControllerHandlerTest {
 		ByteBuf buffer = Unpooled.copiedBuffer(new byte[] {});
 		LastHttpContent content = new DefaultLastHttpContent(buffer);
 		controllerHandler.channelRead0(context, content);
-		assertEquals(context.getStatus(), HttpResponseStatus.NOT_FOUND);
+		assertEquals(HttpResponseStatus.NOT_FOUND, context.getStatus());
 	}
 }
