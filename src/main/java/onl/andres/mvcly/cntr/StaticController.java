@@ -45,10 +45,11 @@ public class StaticController implements BaseController {
 		return new Response(HttpResponseStatus.OK, headers, getContent(filePath));
 	}
 
-	private byte[] getContent(String filePath) {
+	private byte[] getContent(String path) {
 		if (Boolean.parseBoolean(ENABLE_CACHE.get())) {
-			return staticCache.get(filePath);
+			staticCache.computeIfAbsent(path, FileSystemUtils::getContent);
+			return staticCache.get(path);
 		}
-		return FileSystemUtils.getContent(filePath);
+		return FileSystemUtils.getContent(path);
 	}
 }
