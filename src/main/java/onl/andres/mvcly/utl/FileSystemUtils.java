@@ -66,4 +66,12 @@ public class FileSystemUtils {
 			throw new ServiceException.InternalServer(e);
 		}
 	}
+	
+	public static void renameFile(Path oldPath, Path newPath) {
+		try {
+			Files.move(oldPath, newPath);
+		} catch (IOException e) {
+			throw new ServiceException.InternalServer(e);
+		}
+	}
 }
