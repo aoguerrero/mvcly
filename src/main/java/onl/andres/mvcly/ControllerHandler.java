@@ -25,7 +25,7 @@ import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.LastHttpContent;
-import onl.andres.mvcly.cntr.BaseController;
+import onl.andres.mvcly.ctrl.BaseController;
 import onl.andres.mvcly.excp.ServiceException;
 import onl.andres.mvcly.mdl.Response;
 import onl.andres.mvcly.utl.FileSystemUtils;

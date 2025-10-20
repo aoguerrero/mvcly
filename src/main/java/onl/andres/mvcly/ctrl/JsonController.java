@@ -1,4 +1,4 @@
-package onl.andres.mvcly.cntr;
+package onl.andres.mvcly.ctrl;
 
 import java.nio.charset.StandardCharsets;
 

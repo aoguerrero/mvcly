@@ -3,7 +3,7 @@ package onl.andres.mvcly;
 import java.util.HashMap;
 import java.util.Map;
 
-import onl.andres.mvcly.cntr.BaseController;
+import onl.andres.mvcly.ctrl.BaseController;
 
 public class TestUtilities {
 

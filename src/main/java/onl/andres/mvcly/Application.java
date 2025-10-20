@@ -1,8 +1,5 @@
 package onl.andres.mvcly;
 
-import static onl.andres.mvcly.ThinmvcParameters.ENABLE_CACHE;
-import static onl.andres.mvcly.ThinmvcParameters.PORT;
-
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -19,7 +16,9 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.http.HttpRequestDecoder;
 import io.netty.handler.codec.http.HttpResponseEncoder;
-import onl.andres.mvcly.cntr.BaseController;
+import onl.andres.mvcly.ctrl.BaseController;
+
+import static onl.andres.mvcly.ThinmvcParameters.*;
 
 public class Application {
 
@@ -56,9 +55,12 @@ public class Application {
 	}
 
 	private void logInfo(Map<String, BaseController> controllers) {
-		logger.info("Accepted JVM parameters: '{}', '{}'", PORT.getName(), ENABLE_CACHE.getName());
+		logger.info("Accepted JVM parameters: '{}', '{}', '{}', '{}'", PORT.getName(), ENABLE_CACHE.getName(),
+                TEMPLATES_PATH.getName(), FILES_PATH.getName());
 		logger.info("Application listening on port: {}", PORT.get());
 		logger.info("Cache enabled: {}", ENABLE_CACHE.get());
+        logger.info("Templates path: {}", TEMPLATES_PATH.get());
+        logger.info("Static Files path: {}", FILES_PATH.get());
 		logger.info("Endpoint paths:");
 		controllers.keySet().stream().forEach(logger::info);
 	}

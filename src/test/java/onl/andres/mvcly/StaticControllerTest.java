@@ -12,7 +12,7 @@ import io.netty.handler.codec.http.DefaultLastHttpContent;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.LastHttpContent;
-import onl.andres.mvcly.cntr.StaticController;
+import onl.andres.mvcly.ctrl.StaticController;
 import onl.andres.mvcly.mock.ContextMock;
 
 public class StaticControllerTest {

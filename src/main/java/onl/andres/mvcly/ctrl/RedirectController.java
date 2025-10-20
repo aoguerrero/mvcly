@@ -1,4 +1,4 @@
-package onl.andres.mvcly.cntr;
+package onl.andres.mvcly.ctrl;
 
 import io.netty.handler.codec.http.DefaultHttpHeaders;
 import io.netty.handler.codec.http.HttpHeaders;

@@ -1,6 +1,6 @@
-package onl.andres.mvcly.cntr;
+package onl.andres.mvcly.ctrl;
 
-import static onl.andres.mvcly.ThinmvcParameters.ENABLE_CACHE;
+import static onl.andres.mvcly.ThinmvcParameters.*;
 
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
@@ -29,7 +29,7 @@ public abstract class TemplateController implements BaseController {
 	public static final String CURRENT_PATH = "current_path";
 
 	protected TemplateController(String path) {
-		this.path = path;
+        this.path = path.startsWith("files://") || path.startsWith("classpath://") ? path : TEMPLATES_PATH.get() + "/" + path;
 		templatesCache = new HashMap<>();
 
 		velocityEngine = new VelocityEngine();

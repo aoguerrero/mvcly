@@ -1,6 +1,7 @@
-package onl.andres.mvcly.cntr;
+package onl.andres.mvcly.ctrl;
 
 import static onl.andres.mvcly.ThinmvcParameters.ENABLE_CACHE;
+import static onl.andres.mvcly.ThinmvcParameters.FILES_PATH;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,12 +17,12 @@ import onl.andres.mvcly.utl.HttpUtils;
 
 public class StaticController implements BaseController {
 
-	private final String baseDir;
+	private final String path;
 
 	private Map<String, byte[]> staticCache;
 
-	public StaticController(String baseDir) {
-		this.baseDir = baseDir;
+	public StaticController(String path) {
+		this.path = path.startsWith("files://") || path.startsWith("classpath://") ? path : FILES_PATH.get() + "/" + path;
 		this.staticCache = new HashMap<>();
 	}
 
@@ -30,15 +31,15 @@ public class StaticController implements BaseController {
 		var params = HttpUtils.getUrlParams(uri);
 
 		HttpHeaders headers = new DefaultHttpHeaders();
-		String filePath = baseDir;
+		String filePath = path;
 
-		if (baseDir.endsWith("/")) {
+		if (path.endsWith("/")) {
 			String resPath = params.get("path");
 			if (resPath == null || resPath.isEmpty() || resPath.contains("..") || resPath.contains(":")
 					|| resPath.contains("//") || resPath.contains("\\") || resPath.startsWith("/"))
 				throw new ServiceException.BadRequest();
 
-			filePath = baseDir + resPath;
+			filePath = path + resPath;
 			headers.add(HttpUtils.CONTENT_TYPE, HttpUtils.getContentType(filePath));
 		}
 		headers.add(HttpUtils.CACHE_CONTROL, HttpUtils.CACHE_CONTROL_3_MONTH);

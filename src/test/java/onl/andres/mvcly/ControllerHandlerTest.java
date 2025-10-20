@@ -14,7 +14,7 @@ import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.LastHttpContent;
-import onl.andres.mvcly.cntr.BaseController;
+import onl.andres.mvcly.ctrl.BaseController;
 import onl.andres.mvcly.mock.ContextMock;
 
 public class ControllerHandlerTest {

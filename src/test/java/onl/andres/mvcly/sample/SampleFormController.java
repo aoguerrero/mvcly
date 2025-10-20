@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import io.netty.handler.codec.http.HttpRequest;
-import onl.andres.mvcly.cntr.FormController;
+import onl.andres.mvcly.ctrl.FormController;
 
 public class SampleFormController extends FormController {
 
