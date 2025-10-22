@@ -5,6 +5,6 @@ import onl.andres.mvcly.mdl.Response;
 
 public interface BaseController {
 	
-	public Response execute(HttpRequest request, byte[] body);
+	Response execute(HttpRequest request, byte[] body);
 
 }

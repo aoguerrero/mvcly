@@ -8,8 +8,8 @@ import onl.andres.mvcly.ctrl.TemplateController;
 
 public class SampleTemplateController extends TemplateController {
 
-	public SampleTemplateController(String path) {
-		super(path);
+	public SampleTemplateController(String path, Map<String, byte[]> templatesMap) {
+		super(path, templatesMap);
 	}
 
 	@Override

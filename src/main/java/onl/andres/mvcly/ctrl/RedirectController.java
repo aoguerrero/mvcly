@@ -9,11 +9,11 @@ import onl.andres.mvcly.utl.HttpUtils;
 
 public abstract class RedirectController implements BaseController {
 
-	protected final String path;
+	protected final String redirectPath;
 	private HttpHeaders responseHeaders;
 
-	protected RedirectController(String path) {
-		this.path = path;
+	protected RedirectController(String redirectPath) {
+		this.redirectPath = redirectPath;
 	}
 
 	public abstract String execute(HttpRequest request);
@@ -23,9 +23,9 @@ public abstract class RedirectController implements BaseController {
 		this.responseHeaders = new DefaultHttpHeaders();
 		String id = execute(request);
 		if (id != null)
-			responseHeaders.add(HttpUtils.LOCATION, this.path.replace("{id}", id));
+			responseHeaders.add(HttpUtils.LOCATION, this.redirectPath.replace("{id}", id));
 		else
-			responseHeaders.add(HttpUtils.LOCATION, this.path);
+			responseHeaders.add(HttpUtils.LOCATION, this.redirectPath);
 		return new Response(HttpResponseStatus.TEMPORARY_REDIRECT, responseHeaders, new byte[] {});
 	}
 
