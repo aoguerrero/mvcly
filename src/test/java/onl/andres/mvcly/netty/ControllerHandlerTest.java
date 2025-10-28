@@ -1,4 +1,4 @@
-package onl.andres.mvcly;
+package onl.andres.mvcly.netty;
 
 import static org.junit.Assert.assertEquals;
 

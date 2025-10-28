@@ -1,7 +1,8 @@
-package onl.andres.mvcly;
+package onl.andres.mvcly.core;
 
 import java.util.Map;
 
+import onl.andres.mvcly.netty.ControllerHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +19,7 @@ import io.netty.handler.codec.http.HttpRequestDecoder;
 import io.netty.handler.codec.http.HttpResponseEncoder;
 import onl.andres.mvcly.ctrl.BaseController;
 
-import static onl.andres.mvcly.ThinmvcParameters.*;
+import static onl.andres.mvcly.core.MvclyParameters.*;
 
 public class Application {
 

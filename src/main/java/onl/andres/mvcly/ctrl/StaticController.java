@@ -1,7 +1,7 @@
 package onl.andres.mvcly.ctrl;
 
-import static onl.andres.mvcly.ThinmvcParameters.ENABLE_CACHE;
-import static onl.andres.mvcly.ThinmvcParameters.FILES_PATH;
+import static onl.andres.mvcly.core.MvclyParameters.ENABLE_CACHE;
+import static onl.andres.mvcly.core.MvclyParameters.FILES_PATH;
 
 import java.util.HashMap;
 import java.util.Map;

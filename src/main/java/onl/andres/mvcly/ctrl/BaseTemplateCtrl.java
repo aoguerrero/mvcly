@@ -3,6 +3,7 @@ package onl.andres.mvcly.ctrl;
 import io.netty.handler.codec.http.DefaultHttpHeaders;
 import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpRequest;
+import onl.andres.mvcly.core.AppCtx;
 import onl.andres.mvcly.utl.ContentType;
 import onl.andres.mvcly.utl.FileSystemUtils;
 import onl.andres.mvcly.utl.HttpUtils;
@@ -12,32 +13,27 @@ import org.apache.velocity.runtime.RuntimeConstants;
 
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.Map;
 
-import static onl.andres.mvcly.ThinmvcParameters.ENABLE_CACHE;
-import static onl.andres.mvcly.ThinmvcParameters.TEMPLATES_PATH;
+import static onl.andres.mvcly.core.MvclyParameters.ENABLE_CACHE;
+import static onl.andres.mvcly.core.MvclyParameters.TEMPLATES_PATH;
 
 public abstract class BaseTemplateCtrl implements BaseController {
 
     public static final String CURRENT_PATH = "current_path";
 
-    private final Map<String, byte[]> templatesMap;
+    private final AppCtx ctx;
     private final String path;
     private final VelocityEngine velocityEngine;
 
-    public BaseTemplateCtrl(String path) {
-        this(path, null);
-    }
-
-    public BaseTemplateCtrl(String path, Map<String, byte[]> templatesMap) {
+    public BaseTemplateCtrl(String path, AppCtx ctx) {
         this.path = path.startsWith("files://") || path.startsWith("classpath://") ? path : TEMPLATES_PATH.get() + "/" + path;
+        this.ctx = ctx;
         velocityEngine = new VelocityEngine();
         if (FileSystemUtils.isClasspath(path)) {
             velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADERS, "classpath");
         }
         velocityEngine.init();
-        this.templatesMap = new HashMap<>();
     }
 
     public abstract Map<String, Object> getContext(HttpRequest request);
@@ -60,8 +56,8 @@ public abstract class BaseTemplateCtrl implements BaseController {
 
     private byte[] getTemplate(String path) {
         if (Boolean.parseBoolean(ENABLE_CACHE.get())) {
-            templatesMap.computeIfAbsent(path, FileSystemUtils::getContent);
-            return templatesMap.get(path);
+            ctx.getTemplatesMap().computeIfAbsent(path, FileSystemUtils::getContent);
+            return ctx.getTemplatesMap().get(path);
         }
         return FileSystemUtils.getContent(path);
     }

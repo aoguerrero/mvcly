@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.netty.handler.codec.http.HttpRequest;
+import onl.andres.mvcly.core.AppCtx;
 import onl.andres.mvcly.ctrl.TemplateController;
 
 public class SampleTemplateController extends TemplateController {
 
-	public SampleTemplateController(String path, Map<String, byte[]> templatesMap) {
-		super(path, templatesMap);
+	public SampleTemplateController(String path, AppCtx ctx) {
+		super(path, ctx);
 	}
 
 	@Override

@@ -1,6 +1,6 @@
-package onl.andres.mvcly;
+package onl.andres.mvcly.netty;
 
-import static onl.andres.mvcly.TestUtilities.getControllerHandler;
+import static onl.andres.mvcly.netty.TestUtilities.getControllerHandler;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;

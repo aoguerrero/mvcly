@@ -1,6 +1,6 @@
-package onl.andres.mvcly;
+package onl.andres.mvcly.core;
 
-public enum ThinmvcParameters {
+public enum MvclyParameters {
 
 	PORT("port", "8080"), ENABLE_CACHE("enable_cache", "false"),
     TEMPLATES_PATH("templates_path", "file://templates"),
@@ -9,7 +9,7 @@ public enum ThinmvcParameters {
 	private final String name;
 	private final String defaultValue;
 
-	private ThinmvcParameters(String name, String defaultValue) {
+	private MvclyParameters(String name, String defaultValue) {
 		this.name = name;
 		this.defaultValue = defaultValue;
 	}

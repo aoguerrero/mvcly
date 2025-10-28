@@ -3,6 +3,7 @@ package onl.andres.mvcly.ctrl;
 import com.google.gson.Gson;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.HttpResponseStatus;
+import onl.andres.mvcly.core.AppCtx;
 import onl.andres.mvcly.excp.ServiceException;
 import onl.andres.mvcly.mdl.Response;
 
@@ -16,14 +17,8 @@ public abstract class TemplateJsonController<I, O> extends BaseTemplateCtrl {
 
     public static final String CURRENT_PATH = "current_path";
 
-    protected TemplateJsonController(String path, Class<I> type) {
-        super(path);
-        this.inputType = type;
-        this.gson = new Gson();
-    }
-
-	protected TemplateJsonController(String path, Map<String, byte[]> templatesMap, Class<I> type) {
-        super(path, templatesMap);
+	protected TemplateJsonController(String path, AppCtx ctx, Class<I> type) {
+        super(path, ctx);
         this.inputType = type;
         this.gson = new Gson();
 	}

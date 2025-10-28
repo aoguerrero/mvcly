@@ -1,4 +1,4 @@
-package onl.andres.mvcly;
+package onl.andres.mvcly.netty;
 
 import static org.junit.Assert.assertEquals;
 
@@ -16,7 +16,7 @@ import io.netty.handler.codec.http.LastHttpContent;
 import onl.andres.mvcly.mock.ContextMock;
 import onl.andres.mvcly.sample.SampleInput;
 import onl.andres.mvcly.sample.SampleJsonController;
-import static onl.andres.mvcly.TestUtilities.getControllerHandler;
+import static onl.andres.mvcly.netty.TestUtilities.getControllerHandler;
 
 public class JsonControllerTest {
 

@@ -1,4 +1,4 @@
-package onl.andres.mvcly;
+package onl.andres.mvcly.netty;
 
 import static io.netty.handler.codec.http.HttpResponseStatus.BAD_REQUEST;
 import static io.netty.handler.codec.http.HttpResponseStatus.INTERNAL_SERVER_ERROR;
