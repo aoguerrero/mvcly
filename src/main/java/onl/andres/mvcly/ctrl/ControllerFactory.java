@@ -12,7 +12,6 @@ public class ControllerFactory {
     private static Logger logger = LoggerFactory.getLogger(ControllerFactory.class);
 
     private Map<String, Object> baseDependencies;
-    private Map<String, Object> otherDependencies;
 
     public ControllerFactory(Map<String, Object> baseDependencies) {
         this.baseDependencies = baseDependencies;
@@ -26,20 +25,20 @@ public class ControllerFactory {
         return getController(clazz, Map.of());
     }
 
-    public BaseController getController(Class<? extends BaseController> clazz, String methodName, Object value)
+    public BaseController getController(Class<? extends BaseController> clazz, String field, Object value)
             throws Exception {
-        return getController(clazz, Map.of(methodName, value));
+        return getController(clazz, Map.of(field, value));
     }
 
-    public BaseController getController(Class<? extends BaseController> clazz, String methodName1, Object value1,
-                                        String methodName2, Object value2) throws Exception {
-        return getController(clazz, Map.of(methodName1, value1, methodName2, value2));
+    public BaseController getController(Class<? extends BaseController> clazz, String field1, Object value1,
+                                        String field2, Object value2) throws Exception {
+        return getController(clazz, Map.of(field1, value1, field2, value2));
     }
 
-    public BaseController getController(Class<? extends BaseController> clazz, String methodName1, Object value1,
-                                        String methodName2, Object value2, String methodName3, Object value3)
+    public BaseController getController(Class<? extends BaseController> clazz, String field1, Object value1,
+                                        String field2, Object value2, String field3, Object value3)
             throws Exception {
-        return getController(clazz, Map.of(methodName1, value1, methodName2, value2, methodName3, value3));
+        return getController(clazz, Map.of(field1, value1, field2, value2, field3, value3));
     }
 
     public BaseController getController(Class<? extends BaseController> clazz, Map<String, Object> otherDependencies)
@@ -68,9 +67,9 @@ public class ControllerFactory {
         return controller;
     }
 
-    private String fieldName(String setterName) {
-        if(setterName.startsWith("set")) {
-            return setterName.substring(3, 4).toLowerCase() + setterName.substring(4);
+    private String fieldName(String methodName) {
+        if (methodName.startsWith("set")) {
+            return methodName.substring(3, 4).toLowerCase() + methodName.substring(4);
         }
         throw new IllegalArgumentException();
     }
