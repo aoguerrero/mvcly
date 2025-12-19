@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>onl.andres</groupId>
 	<artifactId>mvcly</artifactId>
-	<version>1.0</version>
+	<version>1.0.0</version>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>17</maven.compiler.source>
@@ -54,6 +54,6 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>mvcly</finalName>
+		<finalName>mvcly-1.0.0</finalName>
 	</build>
 </project>
