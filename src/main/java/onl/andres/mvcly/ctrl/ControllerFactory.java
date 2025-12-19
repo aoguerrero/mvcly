@@ -11,11 +11,15 @@ public class ControllerFactory {
 
     private static Logger logger = LoggerFactory.getLogger(ControllerFactory.class);
 
-    private Map<String, Object> dependencies;
+    private Map<String, Object> baseDependencies;
     private Map<String, Object> otherDependencies;
 
-    public ControllerFactory(Map<String, Object> dependencies) {
-        this.dependencies = dependencies;
+    public ControllerFactory(Map<String, Object> baseDependencies) {
+        this.baseDependencies = baseDependencies;
+    }
+
+    public ControllerFactory() {
+        this.baseDependencies = Map.of();
     }
 
     public BaseController getController(Class<? extends BaseController> clazz) throws Exception {
@@ -41,26 +45,33 @@ public class ControllerFactory {
     public BaseController getController(Class<? extends BaseController> clazz, Map<String, Object> otherDependencies)
             throws Exception {
         BaseController controller = clazz.getDeclaredConstructor().newInstance();
-        if ((dependencies == null || dependencies.size() == 0) && (otherDependencies == null || otherDependencies.size() == 0)) {
+
+        HashMap<String, Object> allDependencies = new HashMap<>();
+        allDependencies.putAll(baseDependencies);
+        allDependencies.putAll(otherDependencies);
+
+        if (allDependencies.size() == 0) {
             return controller;
         }
-        HashMap<String, Object> dependenciesCopy = new HashMap<>(dependencies);
-        dependenciesCopy.putAll(otherDependencies);
+
+        String clazzName = clazz.getName();
         for (Method method : clazz.getMethods()) {
-            String clazzName = clazz.getName();
             String clazzMethodName = method.getName();
-            for (Map.Entry<String, Object> entry : dependenciesCopy.entrySet()) {
-                String setterName = getSetterName(entry.getKey());
-                if (clazzMethodName.equals(setterName)) {
+            if (clazzMethodName.startsWith("set")) {
+                Object dependency = allDependencies.get(fieldName(clazzMethodName));
+                if (dependency != null) {
                     logger.info("Invoking method {}.{}()", clazzName, clazzMethodName);
-                    method.invoke(controller, entry.getValue());
+                    method.invoke(controller, dependency);
                 }
             }
         }
         return controller;
     }
 
-    private String getSetterName(String fieldName) {
-        return "set" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
+    private String fieldName(String setterName) {
+        if(setterName.startsWith("set")) {
+            return setterName.substring(3, 4).toLowerCase() + setterName.substring(4);
+        }
+        throw new IllegalArgumentException();
     }
 }
