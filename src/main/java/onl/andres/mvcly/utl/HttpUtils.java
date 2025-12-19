@@ -12,14 +12,11 @@ public class HttpUtils {
 
 	public static final String CONTENT_TYPE = "Content-Type";
 	public static final String LOCATION = "Location";
-	public static final String SET_COOKIE = "Set-Cookie";
-	public static final String COOKIE = "Cookie";
 
 	public static final String CACHE_CONTROL = "Cache-Control";
 	public static final String CACHE_CONTROL_3_MONTH = "max-age=7776000";
 	public static final String CACHE_CONTROL_NO_STORE = "no-store";
 
-	public static final String FORM_MULTIPART = "multipart/form-data";
 	public static final String APPLICATION_JSON = "application/json";
 
 	public static Map<String, String> bodyToForm(byte[] body) {
