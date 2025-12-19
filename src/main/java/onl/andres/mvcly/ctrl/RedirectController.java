@@ -23,8 +23,6 @@ public abstract class RedirectController implements BaseController {
 
     @Override
     public Response execute(HttpRequest request, byte[] body) {
-        Objects.requireNonNull(redirectPaths, "Redirect Paths not defined");
-
         this.responseHeaders = new DefaultHttpHeaders();
         int index = execute(request);
         if (index < redirectPaths.length) {
