@@ -8,35 +8,38 @@ import onl.andres.mvcly.excp.ServiceException;
 import onl.andres.mvcly.mdl.Response;
 import onl.andres.mvcly.utl.FileSystemUtils;
 import onl.andres.mvcly.utl.HttpUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
-import java.util.Objects;
 
 import static onl.andres.mvcly.core.MvclyParameters.ENABLE_CACHE;
 import static onl.andres.mvcly.core.MvclyParameters.FILES_PATH;
 
 public class StaticController implements BaseController {
 
-	private String path;
+    private static Logger logger = LoggerFactory.getLogger(StaticController.class);
+
+	private String resourcePath;
 	private Map<String, byte[]> staticMap;
 
 	public Response execute(HttpRequest request, byte[] body) {
-        Objects.requireNonNull(this.path, "Path not defined");
-        Objects.requireNonNull(this.staticMap, "Static Map missing");
-
 		String uri = request.uri();
 		var params = HttpUtils.getUrlParams(uri);
 
 		HttpHeaders headers = new DefaultHttpHeaders();
-		String filePath = path;
+        if(resourcePath == null) {
+            setResourcePath("");
+        }
+		String filePath = resourcePath;
 
-		if (path.endsWith("/")) {
+		if (resourcePath.endsWith("/")) {
 			String resPath = params.get("path");
 			if (resPath == null || resPath.isEmpty() || resPath.contains("..") || resPath.contains(":")
 					|| resPath.contains("//") || resPath.contains("\\") || resPath.startsWith("/"))
 				throw new ServiceException.BadRequest();
 
-			filePath = path + resPath;
+			filePath = resourcePath + resPath;
 			headers.add(HttpUtils.CONTENT_TYPE, HttpUtils.getContentType(filePath));
 		}
 		headers.add(HttpUtils.CACHE_CONTROL, HttpUtils.CACHE_CONTROL_3_MONTH);
@@ -45,8 +48,11 @@ public class StaticController implements BaseController {
 
 	private byte[] getContent(String path) {
 		if (Boolean.parseBoolean(ENABLE_CACHE.get())) {
-			this.staticMap.computeIfAbsent(path, FileSystemUtils::getContent);
-			return this.staticMap.get(path);
+            if(this.staticMap != null) {
+                this.staticMap.computeIfAbsent(path, FileSystemUtils::getContent);
+                return this.staticMap.get(path);
+            }
+            logger.warn("Cached enabled but no Map provided, getting contents from disk.");
 		}
 		return FileSystemUtils.getContent(path);
 	}
@@ -55,7 +61,7 @@ public class StaticController implements BaseController {
         this.staticMap = staticMap;
     }
 
-    public void setPath(String path) {
-        this.path = path.startsWith("files://") || path.startsWith("classpath://") ? path : FILES_PATH.get() + "/" + path;
+    public void setResourcePath(String resourcePath) {
+        this.resourcePath = resourcePath.startsWith("files://") || resourcePath.startsWith("classpath://") ? resourcePath : FILES_PATH.get() + "/" + resourcePath;
     }
 }

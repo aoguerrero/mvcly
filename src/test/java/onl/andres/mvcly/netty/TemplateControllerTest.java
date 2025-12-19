@@ -17,7 +17,7 @@ public class TemplateControllerTest {
 	public void testTemplateController() {
         SampleTemplateController sampleTemplateController = new SampleTemplateController();
         sampleTemplateController.setTemplateMap(new HashMap<>());
-        sampleTemplateController.setPath("classpath:///sample.vm");
+        sampleTemplateController.setTemplatePath("classpath:///sample.vm");
 		ControllerHandler controllerHandler = getControllerHandler("/template", sampleTemplateController);
 		ContextMock context = new ContextMock();
 		DefaultHttpRequest request = new DefaultHttpRequest(HttpVersion.HTTP_1_0, HttpMethod.GET, "/template");

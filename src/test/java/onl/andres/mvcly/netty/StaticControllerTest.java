@@ -17,7 +17,7 @@ public class StaticControllerTest {
     public void testStaticController() {
         StaticController staticController = new StaticController();
         staticController.setStaticMap(new HashMap<>());
-        staticController.setPath("classpath:///sample.html");
+        staticController.setResourcePath("classpath:///sample.html");
         ControllerHandler controllerHandler = getControllerHandler("/static",
                 staticController);
         ContextMock context = new ContextMock();

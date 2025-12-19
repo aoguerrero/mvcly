@@ -25,7 +25,7 @@ public abstract class BaseTemplateCtrl implements BaseController {
     private static final String CURRENT_PATH = "current_path";
 
     private Map<String, byte[]> templateMap;
-    private String path;
+    private String templatePath;
 
     private final VelocityEngine velocityEngine;
 
@@ -44,19 +44,19 @@ public abstract class BaseTemplateCtrl implements BaseController {
     }
 
     protected byte[] evaluateTemplate(Map<String, Object> context) {
-        Objects.requireNonNull(this.path, "Path not defined");
+        Objects.requireNonNull(this.templatePath, "Path not defined");
         Objects.requireNonNull(this.templateMap, "Template Map missing");
 
-        byte[] template = getTemplate(this.path);
+        byte[] template = getTemplate(this.templatePath);
         if(context == null) {
             return template;
         }
-        if (FileSystemUtils.isClasspath(this.path)) {
+        if (FileSystemUtils.isClasspath(this.templatePath)) {
             velocityEngine.setProperty(RuntimeConstants.RESOURCE_LOADERS, "classpath");
         }
         StringWriter writer = new StringWriter();
         VelocityContext velocityContext = new VelocityContext(context);
-        velocityContext.put(CURRENT_PATH, FileSystemUtils.getDirectory(this.path));
+        velocityContext.put(CURRENT_PATH, FileSystemUtils.getDirectory(this.templatePath));
         velocityEngine.evaluate(velocityContext, writer, "", new String(template, StandardCharsets.UTF_8));
         return writer.toString().getBytes(StandardCharsets.UTF_8);
     }
@@ -77,7 +77,7 @@ public abstract class BaseTemplateCtrl implements BaseController {
         this.templateMap = templateMap;
     }
 
-    public void setPath(String path) {
-        this.path = path.startsWith("file://") || path.startsWith("classpath://") ? path : TEMPLATES_PATH.get() + "/" + path;
+    public void setTemplatePath(String templatePath) {
+        this.templatePath = templatePath.startsWith("file://") || templatePath.startsWith("classpath://") ? templatePath : TEMPLATES_PATH.get() + "/" + templatePath;
     }
 }
