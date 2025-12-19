@@ -11,16 +11,19 @@ import onl.andres.mvcly.utl.HttpUtils;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import java.util.Objects;
 
 import static onl.andres.mvcly.core.MvclyParameters.ENABLE_CACHE;
 import static onl.andres.mvcly.core.MvclyParameters.TEMPLATES_PATH;
 
 public abstract class BaseTemplateCtrl implements BaseController {
+
+    private static Logger logger = LoggerFactory.getLogger(BaseTemplateCtrl.class);
 
     private static final String CURRENT_PATH = "current_path";
 
@@ -44,9 +47,6 @@ public abstract class BaseTemplateCtrl implements BaseController {
     }
 
     protected byte[] evaluateTemplate(Map<String, Object> context) {
-        Objects.requireNonNull(this.templatePath, "Path not defined");
-        Objects.requireNonNull(this.templateMap, "Template Map missing");
-
         byte[] template = getTemplate(this.templatePath);
         if(context == null) {
             return template;
@@ -63,8 +63,11 @@ public abstract class BaseTemplateCtrl implements BaseController {
 
     private byte[] getTemplate(String path) {
         if (Boolean.parseBoolean(ENABLE_CACHE.get())) {
-            templateMap.computeIfAbsent(path, FileSystemUtils::getContent);
-            return templateMap.get(path);
+            if(this.templateMap != null) {
+                templateMap.computeIfAbsent(path, FileSystemUtils::getContent);
+                return templateMap.get(path);
+            }
+            logger.warn("Cached enabled but no Map provided, getting contents from disk.");
         }
         return FileSystemUtils.getContent(path);
     }

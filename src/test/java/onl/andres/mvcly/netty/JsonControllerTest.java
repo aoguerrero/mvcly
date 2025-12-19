@@ -5,7 +5,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.handler.codec.http.*;
 import onl.andres.mvcly.mock.ContextMock;
 import onl.andres.mvcly.sample.SampleInput;
-import onl.andres.mvcly.sample.SampleJsonRedirectController;
+import onl.andres.mvcly.sample.SampleJsonController;
 import org.junit.Test;
 
 import java.nio.charset.StandardCharsets;
@@ -13,11 +13,11 @@ import java.nio.charset.StandardCharsets;
 import static onl.andres.mvcly.netty.TestUtilities.getControllerHandler;
 import static org.junit.Assert.assertEquals;
 
-public class JsonRedirectControllerTest {
+public class JsonControllerTest {
 
 	@Test
 	public void testJsonController() {
-        SampleJsonRedirectController sampleJsonRedirectController = new SampleJsonRedirectController();
+        SampleJsonController sampleJsonRedirectController = new SampleJsonController();
         sampleJsonRedirectController.setInputType(SampleInput.class);
         ControllerHandler controllerHandler = getControllerHandler("/json",
                 sampleJsonRedirectController);

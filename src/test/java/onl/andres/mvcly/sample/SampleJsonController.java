@@ -1,9 +1,9 @@
 package onl.andres.mvcly.sample;
 
 import io.netty.handler.codec.http.HttpRequest;
-import onl.andres.mvcly.ctrl.JsonRedirectController;
+import onl.andres.mvcly.ctrl.JsonController;
 
-public class SampleJsonRedirectController extends JsonRedirectController<SampleInput, SampleOutput> {
+public class SampleJsonController extends JsonController<SampleInput, SampleOutput> {
 
 	@Override
 	public SampleOutput execute(HttpRequest request, SampleInput input) {

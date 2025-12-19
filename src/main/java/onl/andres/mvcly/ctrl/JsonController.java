@@ -12,12 +12,12 @@ import onl.andres.mvcly.excp.ServiceException;
 import onl.andres.mvcly.mdl.Response;
 import onl.andres.mvcly.utl.HttpUtils;
 
-public abstract class JsonRedirectController<I, O> implements BaseController {
+public abstract class JsonController<I, O> implements BaseController {
 
 	private Class<I> inputType;
 	private Gson gson;
 
-	protected JsonRedirectController() {
+	protected JsonController() {
 		this.gson = new Gson();
 	}
 
