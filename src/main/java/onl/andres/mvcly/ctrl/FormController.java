@@ -11,6 +11,11 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
+/**
+ * Receives a POST request with form data and redirects the client to the path specified in the redirectPath field.
+ * <p>
+ * Implement method {@code void execute(HttpRequest, Map<String, String>} to process the contents of the source form.
+ */
 public abstract class FormController implements BaseController {
 
     private static Logger logger = LoggerFactory.getLogger(BaseController.class);

@@ -9,7 +9,7 @@ public class SampleRedirectController extends RedirectController {
 	}
 
 	@Override
-	public int execute(HttpRequest request) {
-		return 0;
+	public String execute(HttpRequest request) {
+		return super.execute(request);
 	}
 }

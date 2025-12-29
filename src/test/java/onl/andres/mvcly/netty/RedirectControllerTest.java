@@ -15,7 +15,7 @@ public class RedirectControllerTest {
     @Test
     public void testRedirectController() {
         SampleRedirectController sampleRedirectController = new SampleRedirectController();
-        sampleRedirectController.setRedirectPaths("/new-path");
+        sampleRedirectController.setRedirectPath("/new-path");
         ControllerHandler controllerHandler = getControllerHandler("/redirect",
                 sampleRedirectController);
         ContextMock context = new ContextMock();

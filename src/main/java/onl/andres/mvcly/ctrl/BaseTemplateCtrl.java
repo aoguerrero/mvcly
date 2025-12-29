@@ -21,6 +21,22 @@ import java.util.Map;
 import static onl.andres.mvcly.core.MvclyParameters.ENABLE_CACHE;
 import static onl.andres.mvcly.core.MvclyParameters.TEMPLATES_PATH;
 
+/**
+ * Returns HTML response from a template defined in the field {@code templatePath}.
+ * <p>
+ * Implement the logic in method {@code Map<String, Object> getContext(HttpRequest)} returning the values to be
+ * set in the template.
+ * <p>
+ * If the value of {@code templatePath} starts with:
+ * <ul>
+ * <li>{@code files://} the template is taken as an absolute path in the filesystem.</li>
+ * <li>{@code classpath://} the template is taken as a classpath resource.</li>
+ * <li>Any other path, the path is concatenated to the value of the parameter {@code templates_path}.</li>
+ * </ul>
+ * <p>
+ * To allow caching, pass the {@code Map<String, byte[]> templateMap} and set {@code true} the parameter
+ * {@code enable_cache}.
+ */
 public abstract class BaseTemplateCtrl implements BaseController {
 
     private static Logger logger = LoggerFactory.getLogger(BaseTemplateCtrl.class);
@@ -48,7 +64,7 @@ public abstract class BaseTemplateCtrl implements BaseController {
 
     protected byte[] evaluateTemplate(Map<String, Object> context) {
         byte[] template = getTemplate(this.templatePath);
-        if(context == null) {
+        if (context == null) {
             return template;
         }
         if (FileSystemUtils.isClasspath(this.templatePath)) {
@@ -63,7 +79,7 @@ public abstract class BaseTemplateCtrl implements BaseController {
 
     private byte[] getTemplate(String path) {
         if (Boolean.parseBoolean(ENABLE_CACHE.get())) {
-            if(this.templateMap != null) {
+            if (this.templateMap != null) {
                 templateMap.computeIfAbsent(path, FileSystemUtils::getContent);
                 return templateMap.get(path);
             }

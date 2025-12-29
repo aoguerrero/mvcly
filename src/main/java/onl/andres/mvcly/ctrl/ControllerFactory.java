@@ -7,6 +7,21 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This is a lightweight (cheap) dependency injector, it takes the keys and values from {@code baseDependencies} and
+ * execute the set(Key) method of the controller if is available with the corresponding value.
+ * <p>
+ * Additional dependencies are injected using the {@code getController} methods, receiving a pair or pairs of
+ * key and values.
+ * <p>
+ * For example, if {@code baseDependencies} contains a key "dataSource" with an Object {@code DataSource} the method
+ * {@code setDataSource} will be executed in each controller, setting the same Object.
+ * <p>
+ * This class doesn't check types, a {@code RuntimeException} can be produced if the set(Key) method expects a different
+ * type.
+ * <p>
+ * Use this class to create instances of controllers instead of calling the constructors.
+ */
 public class ControllerFactory {
 
     private static Logger logger = LoggerFactory.getLogger(ControllerFactory.class);

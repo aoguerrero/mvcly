@@ -12,30 +12,39 @@ import onl.andres.mvcly.excp.ServiceException;
 import onl.andres.mvcly.mdl.Response;
 import onl.andres.mvcly.utl.HttpUtils;
 
+/**
+ * Class to implement REST webservices, receives a POST body with JSON content that is parsed into the input class and
+ * produces a response with JSON content from the output class.
+ * <p>
+ * Implement the {@code O execute(HttpRequest, I)} method to define the webservice logic.
+ *
+ * @param <I> Input Class
+ * @param <O> Output Class
+ */
 public abstract class JsonController<I, O> implements BaseController {
 
-	private Class<I> inputType;
-	private Gson gson;
+    private Class<I> inputType;
+    private Gson gson;
 
-	protected JsonController() {
-		this.gson = new Gson();
-	}
+    protected JsonController() {
+        this.gson = new Gson();
+    }
 
-	public abstract O execute(HttpRequest request, I input);
+    public abstract O execute(HttpRequest request, I input);
 
-	@Override
-	public Response execute(HttpRequest request, byte[] body) {
-        if(this.inputType == null) {
+    @Override
+    public Response execute(HttpRequest request, byte[] body) {
+        if (this.inputType == null) {
             throw new IllegalStateException("Input Type not defined");
         }
-		HttpHeaders headers = new DefaultHttpHeaders();
-		headers.add(HttpUtils.CONTENT_TYPE, HttpUtils.APPLICATION_JSON);
-		if (body.length == 0)
-			throw new ServiceException.BadRequest();
-		I input = this.gson.fromJson(new String(body, StandardCharsets.UTF_8), this.inputType);
-		String output = this.gson.toJson(execute(request, input));
-		return new Response(HttpResponseStatus.OK, headers, output.getBytes());
-	}
+        HttpHeaders headers = new DefaultHttpHeaders();
+        headers.add(HttpUtils.CONTENT_TYPE, HttpUtils.APPLICATION_JSON);
+        if (body.length == 0)
+            throw new ServiceException.BadRequest();
+        I input = this.gson.fromJson(new String(body, StandardCharsets.UTF_8), this.inputType);
+        String output = this.gson.toJson(execute(request, input));
+        return new Response(HttpResponseStatus.OK, headers, output.getBytes());
+    }
 
     public void setInputType(Class<I> inputType) {
         this.inputType = inputType;

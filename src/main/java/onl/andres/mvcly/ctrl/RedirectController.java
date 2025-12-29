@@ -12,33 +12,35 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
-public abstract class RedirectController implements BaseController {
+/**
+ * Redirects to another page based on the field {@code redirectPath}.
+ * <p>
+ * Override method {@code String execute(HttpRequest)} to return a different final target path, based on your needs.
+ */
+public class RedirectController implements BaseController {
 
     private static Logger logger = LoggerFactory.getLogger(RedirectController.class);
 
-    private String[] redirectPaths;
+    private String redirectPath;
     private HttpHeaders responseHeaders;
 
-    public abstract int execute(HttpRequest request);
+    public String execute(HttpRequest request) {
+        return redirectPath;
+    }
 
     @Override
     public Response execute(HttpRequest request, byte[] body) {
         this.responseHeaders = new DefaultHttpHeaders();
-        int index = execute(request);
-        if (index < redirectPaths.length) {
-            responseHeaders.add(HttpUtils.LOCATION, redirectPaths[index]);
-            return new Response(HttpResponseStatus.TEMPORARY_REDIRECT, responseHeaders, new byte[]{});
-        } else {
-            logger.error("Invalid index of Redirect Path");
-            throw new ServiceException.InternalServer();
-        }
+        String newPath = execute(request);
+        responseHeaders.add(HttpUtils.LOCATION, newPath);
+        return new Response(HttpResponseStatus.TEMPORARY_REDIRECT, responseHeaders, new byte[]{});
     }
 
     public HttpHeaders getResponseHeaders() {
         return responseHeaders;
     }
 
-    public void setRedirectPaths(String... redirectPaths) {
-        this.redirectPaths = redirectPaths;
+    public void setRedirectPath(String redirectPath) {
+        this.redirectPath = redirectPath;
     }
 }
